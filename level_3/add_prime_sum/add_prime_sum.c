@@ -6,7 +6,7 @@
 /*   By: lleineck <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:03:51 by lleineck          #+#    #+#             */
-/*   Updated: 2025/07/22 20:17:19 by lleineck         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:14:29 by lleineck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	is_prime(int n)
 	int i = 2;
 	if (n < 2)
 		return 0;
-	while (i * i <= n)
+	while (i < n)
 	{
 		if ( n % i == 0)
 			return 0;
