@@ -33,7 +33,7 @@ int end_word(char *str, int current_potition)
 
 	while(is_printable(str[i]))
 	{
-		if (str[i + 1] && str[i + 1] != '\0' && is_space(str[i + 1]))
+		if (!str[i + 1] || is_space(str[i + 1]))
 			return (i);
 		i++;
 	}
@@ -57,20 +57,6 @@ char *ft_strcpy(char *s1, int start, int end)
 	return (s2);
 }
 
-int count_word(char *str)
-{
-	int i = 0;
-	int count = 0;
-	while(is_space(str[i]))
-		i++;
-	while(str[i])
-	{
-		while (is_printable(str[i]))
-		{
-
-		}
-	}
-}
 
 char **ft_split(char *str)
 {
@@ -78,24 +64,30 @@ char **ft_split(char *str)
 	int j = 0;
 	int start;
 	int end;
-	char **matrix;
+	char **matrix = malloc(sizeof(char *) * 100);
 
+	if (!matrix)
+		return (NULL);
 	while(str[i])
 	{
 		while(is_space(str[i]))
 			i++;
-		if (is_printable(str[i]))
+		if (str[i] && is_printable(str[i]))
 		{
 			start = start_word(str, i);
 			end = end_word(str, start);
-			matrix[j][0] = ft_strcpy(str, start, end);
+			if (start == -1 || end == -1)
+				break;
+			matrix[j] = ft_strcpy(str, start, end);
 			j++;
+			i = end;
 		}
 		i++;
 	}
-	matrix[j][0] = '\0';
+	matrix[j] = NULL;
 	return (matrix);
 }
+
 int main(int argc, char **argv)
 {
 	char **matrix;
@@ -110,6 +102,13 @@ int main(int argc, char **argv)
 			i++;
 		}
 	}
+	int j = 0;
+	while(matrix[j])
+	{
+		free(matrix[j]);
+		j++;	
+	}
+
 	free(matrix);
 	return 0;
 }
